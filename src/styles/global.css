@@ -40,6 +40,12 @@ body {
 	overflow-x: hidden;
 }
 
+/* Offsets anchor-link scrolling so section content doesn't land underneath
+   the sticky navbar (~79px desktop, ~60px mobile). */
+section[id] {
+	scroll-margin-top: 96px;
+}
+
 a {
 	color: var(--color-blue);
 	text-decoration: none;
