@@ -21,10 +21,23 @@ const links = [
 
 	<nav class="nav-links" id="nav-links" aria-label="Navegación principal">
 		{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		<a
+			href="https://wa.me/573217866817"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="cta-button cta-button--mobile"
+		>
+			Hablemos por WhatsApp
+		</a>
 	</nav>
 
 	<div class="nav-actions">
-		<a href="https://wa.me/573217866817" target="_blank" rel="noopener noreferrer" class="cta-button">
+		<a
+			href="https://wa.me/573217866817"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="cta-button cta-button--desktop"
+		>
 			Hablemos por WhatsApp
 		</a>
 		<button
@@ -159,6 +172,10 @@ const links = [
 		color: var(--color-navy);
 	}
 
+	.cta-button--mobile {
+		display: none;
+	}
+
 	.nav-toggle {
 		display: none;
 		flex-direction: column;
@@ -216,7 +233,7 @@ const links = [
 		}
 
 		.nav-links.open {
-			max-height: 360px;
+			max-height: 440px;
 			opacity: 1;
 			pointer-events: auto;
 			padding: 20px 24px;
@@ -224,6 +241,15 @@ const links = [
 
 		.nav-toggle {
 			display: flex !important;
+		}
+
+		.cta-button--desktop {
+			display: none;
+		}
+
+		.cta-button--mobile {
+			display: inline-block;
+			margin-top: 4px;
 		}
 	}
 </style>
