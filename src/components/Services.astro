@@ -1,0 +1,144 @@
+---
+const services = [
+	{
+		id: 'svc1',
+		shape: 'square',
+		color: '#00E0B8',
+		title: 'Desarrollo a medida',
+		description: 'Software diseñado desde cero para tu operación, sin plantillas genéricas.',
+	},
+	{
+		id: 'svc2',
+		shape: 'circle',
+		color: '#2563EB',
+		title: 'Automatización',
+		description: 'Automatizamos procesos repetitivos para que tu equipo se enfoque en crecer.',
+	},
+	{
+		id: 'svc3',
+		shape: 'diamond',
+		color: '#0B1E3F',
+		title: 'Arquitectura cloud',
+		description: 'Infraestructura escalable y de alta disponibilidad, lista para crecer contigo.',
+	},
+	{
+		id: 'svc4',
+		shape: 'square',
+		color: '#22CFC6',
+		title: 'Consultoría tecnológica',
+		description:
+			'Te acompañamos a decidir qué construir y cómo, con foco en resultados medibles.',
+	},
+];
+---
+
+<section id="servicios" class="services">
+	<div class="section-inner">
+		<div data-reveal="svcHead" class="section-head">
+			<div class="eyebrow">SERVICIOS</div>
+			<h2>Lo que hacemos.</h2>
+		</div>
+
+		<div class="services-grid">
+			{
+				services.map((service) => (
+					<div data-reveal={service.id} class="service-card">
+						<div class={`service-icon service-icon--${service.shape}`} style={`background:${service.color}`} />
+						<h3>{service.title}</h3>
+						<p>{service.description}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.services {
+		padding: clamp(64px, 10vw, 110px) clamp(20px, 6vw, 56px);
+		background: var(--color-bg-light);
+	}
+
+	.section-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.12em;
+		color: var(--color-blue);
+		margin-bottom: 14px;
+	}
+
+	.section-head h2 {
+		font: 600 clamp(28px, 4vw, 38px) / 1.15 var(--font-display);
+		color: var(--color-navy);
+		letter-spacing: -0.02em;
+		margin: 0 0 48px;
+		max-width: 600px;
+	}
+
+	.services-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+		gap: 24px;
+	}
+
+	.service-card {
+		background: var(--color-white);
+		border-radius: 14px;
+		padding: 32px 28px;
+		box-shadow: 0 2px 12px rgba(11, 30, 63, 0.06);
+		transition:
+			box-shadow 0.25s ease,
+			opacity 0.6s ease,
+			transform 0.6s ease;
+	}
+
+	.service-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 16px 32px rgba(11, 30, 63, 0.14);
+	}
+
+	.services-grid > :nth-child(2) {
+		transition-delay: 0.06s;
+	}
+	.services-grid > :nth-child(3) {
+		transition-delay: 0.12s;
+	}
+	.services-grid > :nth-child(4) {
+		transition-delay: 0.18s;
+	}
+
+	.service-icon {
+		width: 14px;
+		height: 14px;
+		margin-bottom: 22px;
+	}
+
+	.service-icon--square {
+		border-radius: 4px;
+	}
+
+	.service-icon--circle {
+		border-radius: 50%;
+	}
+
+	.service-icon--diamond {
+		transform: rotate(45deg);
+	}
+
+	.service-card h3 {
+		font: 600 19px var(--font-display);
+		color: var(--color-navy);
+		margin: 0 0 12px;
+	}
+
+	.service-card p {
+		font: 400 14px / 1.6 var(--font-sans);
+		color: var(--color-text);
+		opacity: 0.72;
+		margin: 0;
+	}
+</style>
