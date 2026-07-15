@@ -1,23 +1,85 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Skeilo — Software a medida que escala tu negocio',
+	description = 'Diseñamos y desarrollamos software a medida, combinando arquitectura cloud, automatización y desarrollo personalizado para generar eficiencia, reducir costos y acelerar el crecimiento.',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+		<meta name="theme-color" content="#0b1e3f" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:locale" content="es_CO" />
+		<meta property="og:site_name" content="Skeilo" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+
+		<Font cssVariable="--font-ibm-plex-mono" />
+		<Font cssVariable="--font-ibm-plex-sans" />
+		<Font cssVariable="--font-sora" />
+
+		<script
+			is:inline
+			type="application/ld+json"
+			set:html={JSON.stringify({
+				'@context': 'https://schema.org',
+				'@type': 'Organization',
+				name: 'Skeilo',
+				url: 'https://www.skeilo.com',
+				email: 'hola@skeilo.com',
+				description,
+			})}
+		/>
 	</head>
 	<body>
 		<slot />
+
+		<script>
+			const revealTargets = document.querySelectorAll('[data-reveal]');
+
+			if ('IntersectionObserver' in window && revealTargets.length) {
+				const observer = new IntersectionObserver(
+					(entries, obs) => {
+						for (const entry of entries) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-revealed');
+								obs.unobserve(entry.target);
+							}
+						}
+					},
+					{ rootMargin: '0px 0px -10% 0px', threshold: 0 },
+				);
+
+				revealTargets.forEach((el) => observer.observe(el));
+			} else {
+				revealTargets.forEach((el) => el.classList.add('is-revealed'));
+			}
+		</script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
