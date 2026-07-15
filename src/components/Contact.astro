@@ -1,4 +1,5 @@
 ---
+import { RECAPTCHA_SITE_KEY } from 'astro:env/client';
 ---
 
 <section id="contacto" class="contact">
@@ -51,10 +52,24 @@
 				</div>
 
 				<button type="submit" id="form-submit" class="submit-button">Enviar mensaje</button>
+
+				<p class="recaptcha-disclaimer">
+					Este sitio está protegido por reCAPTCHA y aplican la{' '}
+					<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
+						>Política de Privacidad</a
+					>{' '}
+					y los{' '}
+					<a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
+						>Términos de Servicio</a
+					>{' '}
+					de Google.
+				</p>
 			</form>
 		</div>
 	</div>
 </section>
+
+<script is:inline src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}></script>
 
 <style>
 	.contact {
@@ -196,9 +211,46 @@
 	.submit-button:disabled {
 		cursor: not-allowed;
 	}
+
+	.recaptcha-disclaimer {
+		font: 400 12px / 1.5 var(--font-sans);
+		color: var(--color-text);
+		opacity: 0.55;
+		margin: -6px 0 0;
+	}
+
+	.recaptcha-disclaimer a {
+		color: var(--color-blue);
+	}
 </style>
 
 <script>
+	import { RECAPTCHA_SITE_KEY } from 'astro:env/client';
+
+	declare global {
+		interface Window {
+			grecaptcha?: {
+				ready: (callback: () => void) => void;
+				execute: (siteKey: string, options: { action: string }) => Promise<string>;
+			};
+		}
+	}
+
+	const getRecaptchaToken = (): Promise<string> =>
+		new Promise((resolve, reject) => {
+			if (!window.grecaptcha) {
+				reject(new Error('reCAPTCHA no está disponible.'));
+				return;
+			}
+
+			window.grecaptcha.ready(() => {
+				window
+					.grecaptcha!.execute(RECAPTCHA_SITE_KEY, { action: 'contact' })
+					.then(resolve)
+					.catch(reject);
+			});
+		});
+
 	const form = document.getElementById('contact-form') as HTMLFormElement | null;
 	const submitButton = document.getElementById('form-submit') as HTMLButtonElement | null;
 	const errorBox = document.getElementById('form-error');
@@ -242,10 +294,12 @@
 			submitButton.textContent = 'Enviando…';
 
 			try {
+				const recaptchaToken = await getRecaptchaToken();
+
 				const response = await fetch('/api/contact', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ name, email, company, message }),
+					body: JSON.stringify({ name, email, company, message, recaptchaToken }),
 				});
 
 				const result = (await response.json()) as { success: boolean; message?: string };
