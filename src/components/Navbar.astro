@@ -217,26 +217,31 @@ const links = [
 			left: 0;
 			right: 0;
 			flex-direction: column;
-			align-items: flex-start;
+			align-items: center;
+			text-align: center;
 			background: var(--color-navy);
-			padding: 0 24px;
+			padding: 20px 24px;
 			gap: 18px !important;
-			max-height: 0;
 			opacity: 0;
-			overflow: hidden;
+			visibility: hidden;
+			transform: translateY(-8px);
 			pointer-events: none;
 			box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 			transition:
-				max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
 				opacity 0.28s ease,
-				padding 0.38s ease;
+				transform 0.28s ease,
+				visibility 0s linear 0.28s;
 		}
 
 		.nav-links.open {
-			max-height: 440px;
 			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
 			pointer-events: auto;
-			padding: 20px 24px;
+			transition:
+				opacity 0.28s ease,
+				transform 0.28s ease,
+				visibility 0s linear 0s;
 		}
 
 		.nav-toggle {
