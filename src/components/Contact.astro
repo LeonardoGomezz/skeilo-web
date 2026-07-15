@@ -6,7 +6,7 @@
 		<div>
 			<div data-reveal="contactHead" class="contact-head">
 				<div class="eyebrow">CONTACTO</div>
-				<h2>Hablemos de tu próximo proyecto.</h2>
+				<h2>Hablemos de tu próximo proyecto</h2>
 				<p>Cuéntanos tu desafío y te respondemos con una propuesta concreta.</p>
 				<a
 					href="https://wa.me/573217866817"
@@ -208,6 +208,7 @@
 	if (form && submitButton && errorBox && errorText && successBox) {
 		const nameInput = form.elements.namedItem('name') as HTMLInputElement;
 		const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+		const companyInput = form.elements.namedItem('company') as HTMLInputElement;
 		const messageInput = form.elements.namedItem('message') as HTMLTextAreaElement;
 
 		const showError = (message: string) => {
@@ -216,11 +217,12 @@
 			successBox.hidden = true;
 		};
 
-		form.addEventListener('submit', (event) => {
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 
 			const name = nameInput.value.trim();
 			const email = emailInput.value.trim();
+			const company = companyInput.value.trim();
 			const message = messageInput.value.trim();
 			const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -239,12 +241,28 @@
 			submitButton.disabled = true;
 			submitButton.textContent = 'Enviando…';
 
-			setTimeout(() => {
+			try {
+				const response = await fetch('/api/contact', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ name, email, company, message }),
+				});
+
+				const result = (await response.json()) as { success: boolean; message?: string };
+
+				if (!response.ok || !result.success) {
+					showError(result.message ?? 'No pudimos enviar tu mensaje. Intenta de nuevo.');
+					return;
+				}
+
 				successBox.hidden = false;
 				form.reset();
+			} catch {
+				showError('No pudimos enviar tu mensaje. Revisa tu conexión e intenta de nuevo.');
+			} finally {
 				submitButton.disabled = false;
 				submitButton.textContent = 'Enviar mensaje';
-			}, 1200);
+			}
 		});
 	}
 </script>
