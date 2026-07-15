@@ -1,0 +1,200 @@
+---
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+const values = [
+	{ id: 'val1', number: '01', title: 'Innovación constante', description: 'Buscamos siempre la mejor forma, no la conocida.' },
+	{ id: 'val2', number: '02', title: 'Compromiso con los resultados', description: 'Medimos el éxito por el impacto en el negocio del cliente.' },
+	{ id: 'val3', number: '03', title: 'Transparencia y confianza', description: 'Hablamos claro, también cuando la respuesta es difícil.' },
+	{ id: 'val4', number: '04', title: 'Excelencia técnica', description: 'Soluciones bien construidas, no atajos.' },
+	{ id: 'val5', number: '05', title: 'Orientación al cliente', description: 'Su contexto define el producto, no al revés.' },
+	{ id: 'val6', number: '06', title: 'Aprendizaje continuo', description: 'Cada proyecto nos deja mejores que el anterior.' },
+];
+
+const team = [
+	{ id: 'team1', name: 'Deimer Restrepo', role: 'CTO · ARQUITECTO DE SOFTWARE' },
+	{ id: 'team2', name: '[Nombre Apellido]', role: '[Cargo]' },
+	{ id: 'team3', name: '[Nombre Apellido]', role: '[Cargo]' },
+];
+---
+
+<section id="nosotros" class="about">
+	<div class="section-inner">
+		<div data-reveal="nosHead" class="section-head">
+			<div class="eyebrow">NOSOTROS</div>
+			<h2>Lo que nos mueve.</h2>
+			<p>
+				Diseñamos y desarrollamos soluciones de software a medida que impulsan el crecimiento de
+				las empresas, optimizan sus procesos y generan ventajas competitivas sostenibles mediante
+				la innovación y la automatización.
+			</p>
+		</div>
+
+		<div class="values-grid">
+			{
+				values.map((value) => (
+					<div data-reveal={value.id} class="value-card">
+						<div class="value-number">{value.number}</div>
+						<h3>{value.title}</h3>
+						<p>{value.description}</p>
+					</div>
+				))
+			}
+		</div>
+
+		<div data-reveal="teamHead" class="team-label">EQUIPO</div>
+		<div class="team-grid">
+			{
+				team.map((member) => (
+					<div data-reveal={member.id} class="team-card">
+						<div class="team-avatar">
+							<ImagePlaceholder label="Foto" shape="circle" />
+						</div>
+						<h3>{member.name}</h3>
+						<p>{member.role}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.about {
+		padding: clamp(64px, 10vw, 110px) clamp(20px, 6vw, 56px);
+		background: var(--color-bg-light);
+	}
+
+	.section-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.12em;
+		color: var(--color-blue);
+		margin-bottom: 14px;
+	}
+
+	.section-head h2 {
+		font: 600 clamp(28px, 4vw, 38px) / 1.15 var(--font-display);
+		color: var(--color-navy);
+		letter-spacing: -0.02em;
+		margin: 0 0 20px;
+		max-width: 640px;
+	}
+
+	.section-head p {
+		font: 400 16px / 1.7 var(--font-sans);
+		color: var(--color-text);
+		opacity: 0.75;
+		max-width: 660px;
+		margin: 0 0 56px;
+	}
+
+	.values-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 28px;
+		margin-bottom: 80px;
+	}
+
+	.value-card {
+		transition:
+			opacity 0.6s ease,
+			transform 0.6s ease;
+	}
+
+	.values-grid > :nth-child(2) {
+		transition-delay: 0.04s;
+	}
+	.values-grid > :nth-child(3) {
+		transition-delay: 0.08s;
+	}
+	.values-grid > :nth-child(4) {
+		transition-delay: 0.12s;
+	}
+	.values-grid > :nth-child(5) {
+		transition-delay: 0.16s;
+	}
+	.values-grid > :nth-child(6) {
+		transition-delay: 0.2s;
+	}
+
+	.value-number {
+		font: 500 12px var(--font-mono);
+		color: var(--color-mint);
+		margin-bottom: 8px;
+	}
+
+	.value-card h3 {
+		font: 600 17px var(--font-display);
+		color: var(--color-navy);
+		margin: 0 0 8px;
+	}
+
+	.value-card p {
+		font: 400 14px / 1.6 var(--font-sans);
+		color: var(--color-text);
+		opacity: 0.7;
+		margin: 0;
+	}
+
+	.team-label {
+		font: 600 14px var(--font-sans);
+		color: var(--color-navy);
+		opacity: 0.55;
+		letter-spacing: 0.05em;
+		margin-bottom: 24px;
+		transition:
+			opacity 0.6s ease,
+			transform 0.6s ease;
+	}
+
+	.team-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 28px;
+	}
+
+	.team-card {
+		background: var(--color-white);
+		border-radius: 14px;
+		padding: 28px;
+		text-align: center;
+		transition:
+			box-shadow 0.25s ease,
+			opacity 0.6s ease,
+			transform 0.6s ease;
+	}
+
+	.team-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 16px 32px rgba(11, 30, 63, 0.14);
+	}
+
+	.team-grid > :nth-child(2) {
+		transition-delay: 0.06s;
+	}
+	.team-grid > :nth-child(3) {
+		transition-delay: 0.12s;
+	}
+
+	.team-avatar {
+		width: 96px;
+		height: 96px;
+		margin: 0 auto 18px;
+	}
+
+	.team-card h3 {
+		font: 600 17px var(--font-display);
+		color: var(--color-navy);
+		margin: 0 0 4px;
+	}
+
+	.team-card p {
+		font: 500 12px var(--font-mono);
+		color: var(--color-blue);
+		margin: 0;
+	}
+</style>
