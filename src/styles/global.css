@@ -46,6 +46,12 @@ section[id] {
 	scroll-margin-top: 96px;
 }
 
+/* Google requires visible reCAPTCHA attribution text in the UI whenever
+   the floating badge is hidden (see .recaptcha-disclaimer in Contact.astro). */
+.grecaptcha-badge {
+	visibility: hidden;
+}
+
 a {
 	color: var(--color-blue);
 	text-decoration: none;

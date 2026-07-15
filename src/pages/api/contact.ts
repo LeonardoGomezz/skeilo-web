@@ -1,12 +1,14 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
-import { RESEND_API_KEY, RESEND_FROM_EMAIL, RESEND_TO_EMAIL } from 'astro:env/server';
+import { RESEND_API_KEY, RESEND_FROM_EMAIL, RESEND_TO_EMAIL, RECAPTCHA_SECRET_KEY } from 'astro:env/server';
 import { buildContactEmailHtml, buildContactEmailText } from '../../lib/contact-email';
 
 export const prerender = false;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_LENGTHS = { name: 120, email: 200, company: 120, message: 5000 };
+const RECAPTCHA_ACTION = 'contact';
+const RECAPTCHA_SCORE_THRESHOLD = 0.5;
 
 const jsonResponse = (status: number, body: Record<string, unknown>) =>
 	new Response(JSON.stringify(body), {
@@ -14,7 +16,42 @@ const jsonResponse = (status: number, body: Record<string, unknown>) =>
 		headers: { 'Content-Type': 'application/json' },
 	});
 
-export const POST: APIRoute = async ({ request }) => {
+interface RecaptchaVerifyResponse {
+	success: boolean;
+	score?: number;
+	action?: string;
+	'error-codes'?: string[];
+}
+
+const verifyRecaptcha = async (token: string, remoteip?: string): Promise<boolean> => {
+	const params = new URLSearchParams({ secret: RECAPTCHA_SECRET_KEY, response: token });
+
+	if (remoteip) {
+		params.set('remoteip', remoteip);
+	}
+
+	try {
+		const verifyResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: params,
+		});
+
+		const result = (await verifyResponse.json()) as RecaptchaVerifyResponse;
+
+		return (
+			result.success === true &&
+			result.action === RECAPTCHA_ACTION &&
+			(result.score ?? 0) >= RECAPTCHA_SCORE_THRESHOLD
+		);
+	} catch (err) {
+		console.error('reCAPTCHA verification request failed:', err);
+		return false;
+	}
+};
+
+export const POST: APIRoute = async (context) => {
+	const { request } = context;
 	if (request.headers.get('content-type')?.includes('application/json') !== true) {
 		return jsonResponse(400, { success: false, message: 'Solicitud inválida.' });
 	}
@@ -31,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
 		return jsonResponse(400, { success: false, message: 'Solicitud inválida.' });
 	}
 
-	const { name, email, company, message } = body as Record<string, unknown>;
+	const { name, email, company, message, recaptchaToken } = body as Record<string, unknown>;
 
 	const cleanName = typeof name === 'string' ? name.trim() : '';
 	const cleanEmail = typeof email === 'string' ? email.trim() : '';
@@ -53,6 +90,30 @@ export const POST: APIRoute = async ({ request }) => {
 		cleanMessage.length > MAX_LENGTHS.message
 	) {
 		return jsonResponse(400, { success: false, message: 'Uno de los campos es demasiado largo.' });
+	}
+
+	if (typeof recaptchaToken !== 'string' || !recaptchaToken) {
+		return jsonResponse(400, {
+			success: false,
+			message: 'No pudimos verificar que eres una persona. Recarga la página e intenta de nuevo.',
+		});
+	}
+
+	let remoteip: string | undefined;
+
+	try {
+		remoteip = context.clientAddress;
+	} catch {
+		remoteip = undefined;
+	}
+
+	const recaptchaOk = await verifyRecaptcha(recaptchaToken, remoteip);
+
+	if (!recaptchaOk) {
+		return jsonResponse(400, {
+			success: false,
+			message: 'No pudimos verificar tu solicitud. Intenta de nuevo.',
+		});
 	}
 
 	const submission = { name: cleanName, email: cleanEmail, company: cleanCompany, message: cleanMessage };

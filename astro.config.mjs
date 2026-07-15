@@ -13,6 +13,8 @@ export default defineConfig({
 			RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
 			RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret' }),
 			RESEND_TO_EMAIL: envField.string({ context: 'server', access: 'secret' }),
+			RECAPTCHA_SITE_KEY: envField.string({ context: 'client', access: 'public' }),
+			RECAPTCHA_SECRET_KEY: envField.string({ context: 'server', access: 'secret' }),
 		},
 	},
 	fonts: [
