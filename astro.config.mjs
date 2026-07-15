@@ -1,11 +1,20 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://www.skeilo.tech',
+	adapter: vercel(),
 	integrations: [sitemap()],
+	env: {
+		schema: {
+			RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+			RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret' }),
+			RESEND_TO_EMAIL: envField.string({ context: 'server', access: 'secret' }),
+		},
+	},
 	fonts: [
 		{
 			provider: fontProviders.google(),
