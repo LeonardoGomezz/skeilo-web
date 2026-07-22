@@ -1,14 +1,18 @@
 ---
+import { Image } from 'astro:assets';
+import deimerPhoto from '../assets/team/deimer.webp';
+import leonardoPhoto from '../assets/team/leonardo.webp';
+
 const team = [
 	{
 		name: 'Deimer Restrepo',
 		role: 'CO-FOUNDER · ING. DE SISTEMAS',
-		image: '/images/deimer.webp',
+		image: deimerPhoto,
 	},
 	{
 		name: 'Leonardo',
 		role: 'CO-FOUNDER · ING. DE SISTEMAS',
-		image: '/images/leonardo.webp',
+		image: leonardoPhoto,
 	},
 ];
 ---
@@ -28,13 +32,14 @@ const team = [
 			{
 				team.map((member) => (
 					<div data-reveal class="team-card">
-						<img
+						<Image
 							src={member.image}
 							alt={`${member.name}, Co-founder de Skeilo`}
-							width="88"
-							height="88"
+							width={88}
+							height={88}
+							densities={[1, 2]}
+							format="webp"
 							loading="lazy"
-							decoding="async"
 						/>
 						<div>
 							<h3>{member.name}</h3>

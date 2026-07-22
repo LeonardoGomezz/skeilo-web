@@ -21,7 +21,22 @@ const faqs = [
 		a: 'Perfecto. Auditamos lo que tienes, automatizamos lo que frena a tu equipo e integramos sin reescribir todo desde cero cuando no hace falta.',
 	},
 ];
+
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqs.map((item) => ({
+		'@type': 'Question',
+		name: item.q,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.a,
+		},
+	})),
+};
 ---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <section class="faq">
 	<div class="section-inner">
