@@ -1,0 +1,88 @@
+---
+const year = new Date().getFullYear();
+---
+
+<section class="testimonio">
+	<div data-reveal class="testimonio-card">
+		<span class="eyebrow">07 — Testimonios</span>
+		<p class="quote">
+			"Este espacio es para las palabras de nuestros primeros clientes. Estamos trabajando para
+			que la primera reseña llegue con un resultado real detrás."
+		</p>
+		<div class="testimonio-author">
+			<span class="avatar" aria-hidden="true"></span>
+			<div>
+				<div class="author-name">Tu empresa aquí</div>
+				<div class="author-meta">Cliente Skeilo · {year}</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.testimonio {
+		padding: 80px 24px;
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+
+	.testimonio-card {
+		max-width: 900px;
+		margin: 0 auto;
+		text-align: center;
+		background: linear-gradient(160deg, var(--color-card), var(--color-navy));
+		border: 1px solid rgba(120, 200, 255, 0.16);
+		border-radius: 22px;
+		padding: 52px 40px;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-blue);
+	}
+
+	.quote {
+		font: 500 clamp(22px, 3vw, 32px) / 1.35 var(--font-display);
+		letter-spacing: -0.015em;
+		color: var(--color-ink);
+		margin: 20px 0 0;
+	}
+
+	.testimonio-author {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		margin: 28px 0 0;
+	}
+
+	.avatar {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: repeating-linear-gradient(
+			135deg,
+			rgba(0, 224, 184, 0.2) 0,
+			rgba(0, 224, 184, 0.2) 2px,
+			transparent 2px,
+			transparent 8px
+		);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.testimonio-author > div {
+		text-align: left;
+	}
+
+	.author-name {
+		font-weight: 600;
+		color: var(--color-white);
+		font-size: 15px;
+	}
+
+	.author-meta {
+		font: 400 12px var(--font-mono);
+		color: var(--color-ink-dim);
+	}
+</style>

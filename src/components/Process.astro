@@ -1,52 +1,47 @@
 ---
 const steps = [
 	{
-		id: 'proc1',
-		number: '01',
-		color: '#00E0B8',
+		step: '01',
 		title: 'Descubrimiento',
-		description: 'Entendemos tu operación y tus objetivos de negocio.',
+		desc: 'Entendemos tu operación, tus cuellos de botella y tus objetivos de negocio.',
 	},
 	{
-		id: 'proc2',
-		number: '02',
-		color: '#2563EB',
+		step: '02',
 		title: 'Diseño de arquitectura',
-		description: 'Definimos la solución técnica y el roadmap de entrega.',
+		desc: 'Definimos la solución técnica y un roadmap de entrega claro y realista.',
 	},
 	{
-		id: 'proc3',
-		number: '03',
-		color: '#2563EB',
+		step: '03',
 		title: 'Desarrollo iterativo',
-		description: 'Construimos y entregamos en ciclos cortos y medibles.',
+		desc: 'Construimos y entregamos en ciclos cortos, medibles y sin sorpresas.',
 	},
 	{
-		id: 'proc4',
-		number: '04',
-		color: '#0B1E3F',
+		step: '04',
 		title: 'Escalamiento',
-		description: 'Optimizamos, automatizamos y acompañamos el crecimiento.',
+		desc: 'Optimizamos, automatizamos y acompañamos tu crecimiento a largo plazo.',
 	},
 ];
 ---
 
 <section id="proceso" class="process">
 	<div class="section-inner">
-		<div data-reveal="procHead" class="section-head">
-			<div class="eyebrow">PROCESO</div>
-			<h2>Cómo trabajamos</h2>
+		<div data-reveal class="section-head">
+			<span class="eyebrow">04 — Cómo trabajamos</span>
+			<h2>Un proceso claro, sin sorpresas.</h2>
+			<p>
+				Sabes qué esperar en cada etapa, ves avances cada dos semanas y decides sobre resultados
+				reales — no promesas.
+			</p>
 		</div>
 
 		<div class="process-grid">
 			{
-				steps.map((step) => (
-					<div data-reveal={step.id} class="process-step">
-						<div class="process-number" style={`color:${step.color};border-color:${step.color}`}>
-							{step.number}
-						</div>
-						<h3>{step.title}</h3>
-						<p>{step.description}</p>
+				steps.map((item) => (
+					<div data-reveal class="process-step">
+						<div class="process-dot" aria-hidden="true" />
+						<div class="process-number">{item.step}</div>
+						<h3>{item.title}</h3>
+						<p>{item.desc}</p>
 					</div>
 				))
 			}
@@ -56,8 +51,10 @@ const steps = [
 
 <style>
 	.process {
-		padding: clamp(64px, 10vw, 110px) clamp(20px, 6vw, 56px);
-		background: var(--color-white);
+		padding: 96px 24px;
+		background: rgba(255, 255, 255, 0.015);
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 	}
 
 	.section-inner {
@@ -67,29 +64,32 @@ const steps = [
 
 	.eyebrow {
 		font: 500 12px var(--font-mono);
-		letter-spacing: 0.12em;
-		color: var(--color-blue);
-		margin-bottom: 14px;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-mint);
+	}
+
+	.section-head {
+		max-width: 640px;
 	}
 
 	.section-head h2 {
-		font: 600 clamp(28px, 4vw, 38px) / 1.15 var(--font-display);
-		color: var(--color-navy);
-		letter-spacing: -0.02em;
-		margin: 0 0 48px;
-		max-width: 600px;
+		font: 600 clamp(30px, 4.5vw, 50px) / 1.04 var(--font-display);
+		letter-spacing: -0.025em;
+		margin: 16px 0 0;
+	}
+
+	.section-head p {
+		font: 400 18px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 18px 0 0;
 	}
 
 	.process-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 28px;
-	}
-
-	.process-step {
-		transition:
-			opacity 0.6s ease,
-			transform 0.6s ease;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0;
+		margin: 52px 0 0;
 	}
 
 	.process-grid > :nth-child(2) {
@@ -102,29 +102,61 @@ const steps = [
 		transition-delay: 0.18s;
 	}
 
-	.process-number {
-		font: 600 15px var(--font-mono);
-		background: var(--color-white);
-		width: 40px;
-		height: 40px;
-		border: 1.5px solid;
+	.process-step {
+		padding: 0 24px;
+		border-left: 1px solid rgba(255, 255, 255, 0.1);
+		position: relative;
+	}
+
+	.process-dot {
+		position: absolute;
+		left: -6px;
+		top: 0;
+		width: 11px;
+		height: 11px;
 		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 20px;
+		background: var(--color-mint);
+		box-shadow: 0 0 12px var(--color-mint);
+	}
+
+	.process-number {
+		font: 700 15px var(--font-display);
+		color: var(--color-mint);
+		letter-spacing: 0.04em;
 	}
 
 	.process-step h3 {
-		font: 600 18px var(--font-display);
-		color: var(--color-navy);
-		margin: 0 0 10px;
+		font: 600 21px var(--font-display);
+		letter-spacing: -0.01em;
+		margin: 14px 0 0;
 	}
 
 	.process-step p {
-		font: 400 14px / 1.6 var(--font-sans);
-		color: var(--color-text);
-		opacity: 0.72;
-		margin: 0;
+		font: 400 15px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 10px 0 0;
+	}
+
+	@media (max-width: 980px) {
+		.process {
+			padding-top: 64px;
+			padding-bottom: 64px;
+		}
+
+		.process-grid {
+			grid-template-columns: repeat(2, 1fr);
+			row-gap: 36px;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.process {
+			padding: 48px 18px;
+		}
+
+		.process-grid {
+			grid-template-columns: 1fr;
+			row-gap: 32px;
+		}
 	}
 </style>

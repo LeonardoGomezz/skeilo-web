@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-	title = 'Skeilo — Software a medida que escala tu negocio',
-	description = 'Diseñamos y desarrollamos software a medida, combinando arquitectura cloud, automatización y desarrollo personalizado para generar eficiencia, reducir costos y acelerar el crecimiento.',
+	title = 'Skeilo — Socio tecnológico para PYMES y SaaS',
+	description = 'Diseñamos, automatizamos y escalamos el software que tu negocio necesita — con arquitectura cloud lista para crecer y resultados que puedes medir. Sin plantillas genéricas.',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -42,7 +42,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 		<Font cssVariable="--font-ibm-plex-mono" />
 		<Font cssVariable="--font-ibm-plex-sans" />
-		<Font cssVariable="--font-sora" />
+		<Font cssVariable="--font-space-grotesk" />
 
 		<script
 			is:inline
@@ -57,7 +57,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			})}
 		/>
 	</head>
-	<body>
+	<body id="top">
+		<div id="sk-progress" aria-hidden="true"></div>
+		<div class="ambient-glow ambient-glow--a" aria-hidden="true"></div>
+		<div class="ambient-glow ambient-glow--b" aria-hidden="true"></div>
+
 		<slot />
 
 		<script>
@@ -80,6 +84,61 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			} else {
 				revealTargets.forEach((el) => el.classList.add('is-revealed'));
 			}
+
+			const progressBar = document.getElementById('sk-progress');
+
+			if (progressBar) {
+				const updateProgress = () => {
+					const doc = document.documentElement;
+					const max = doc.scrollHeight - doc.clientHeight;
+					const ratio = max > 0 ? doc.scrollTop / max : 0;
+					progressBar.style.transform = `scaleX(${ratio})`;
+				};
+
+				window.addEventListener('scroll', updateProgress, { passive: true });
+				updateProgress();
+			}
 		</script>
 	</body>
 </html>
+
+<style>
+	#sk-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background: linear-gradient(90deg, var(--color-mint), var(--color-blue));
+		transform: scaleX(0);
+		transform-origin: 0 50%;
+		box-shadow: 0 0 12px rgba(0, 224, 184, 0.6);
+		z-index: 200;
+	}
+
+	.ambient-glow {
+		position: fixed;
+		border-radius: 50%;
+		filter: blur(20px);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.ambient-glow--a {
+		top: -140px;
+		left: -120px;
+		width: 520px;
+		height: 520px;
+		background: radial-gradient(circle, rgba(0, 224, 184, 0.16), transparent 65%);
+		animation: ambientFloat1 16s ease-in-out infinite;
+	}
+
+	.ambient-glow--b {
+		bottom: -160px;
+		right: -120px;
+		width: 560px;
+		height: 560px;
+		background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 65%);
+		animation: ambientFloat2 20s ease-in-out infinite;
+	}
+</style>

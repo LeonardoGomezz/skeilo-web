@@ -1,0 +1,188 @@
+---
+const faqs = [
+	{
+		q: '¿Cuánto cuesta un proyecto a medida?',
+		a: 'Depende del alcance, pero siempre lo defines tú: partimos de un diagnóstico gratuito y te damos un rango claro antes de empezar. No hay letra pequeña ni costos sorpresa a mitad del camino.',
+	},
+	{
+		q: '¿Cuánto tarda en estar listo?',
+		a: 'Entregamos valor útil desde las primeras 2 semanas y avanzamos en ciclos cortos. Un MVP funcional suele estar entre 4 y 10 semanas según la complejidad.',
+	},
+	{
+		q: '¿Trabajan con empresas fuera de Colombia?',
+		a: 'Sí. Trabajamos 100% remoto con PYMES y equipos SaaS en toda Latinoamérica y de habla hispana. La comunicación es directa por WhatsApp, correo o video.',
+	},
+	{
+		q: '¿El código y la propiedad son míos?',
+		a: 'Completamente. Tú eres dueño del código, la infraestructura y los datos. No te amarramos a licencias ni a plataformas cerradas.',
+	},
+	{
+		q: '¿Y si ya tengo un sistema funcionando?',
+		a: 'Perfecto. Auditamos lo que tienes, automatizamos lo que frena a tu equipo e integramos sin reescribir todo desde cero cuando no hace falta.',
+	},
+];
+---
+
+<section class="faq">
+	<div class="section-inner">
+		<div data-reveal class="section-head">
+			<span class="eyebrow">Preguntas frecuentes</span>
+			<h2>Antes de escribirnos, quizá esto te ayude.</h2>
+		</div>
+
+		<div class="faq-list">
+			{
+				faqs.map((item, i) => (
+					<div class="faq-item">
+						<button
+							type="button"
+							class="faq-trigger"
+							aria-expanded="false"
+							aria-controls={`faq-panel-${i}`}
+							id={`faq-trigger-${i}`}
+						>
+							<span>{item.q}</span>
+							<span class="faq-icon" aria-hidden="true">
+								+
+							</span>
+						</button>
+						<div class="faq-panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`}>
+							<div class="faq-panel-inner">
+								<p>{item.a}</p>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.faq {
+		padding: 96px 24px;
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+
+	.section-inner {
+		max-width: 840px;
+		margin: 0 auto;
+	}
+
+	.section-head {
+		text-align: center;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-mint);
+	}
+
+	.section-head h2 {
+		font: 600 clamp(28px, 4vw, 44px) / 1.06 var(--font-display);
+		letter-spacing: -0.02em;
+		margin: 14px 0 0;
+	}
+
+	.faq-list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 40px 0 0;
+	}
+
+	.faq-item {
+		background: rgba(255, 255, 255, 0.025);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 14px;
+		overflow: hidden;
+	}
+
+	.faq-trigger {
+		width: 100%;
+		text-align: left;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: var(--color-ink);
+		font: 600 17px var(--font-display);
+		padding: 22px 24px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.faq-icon {
+		color: var(--color-mint);
+		font-size: 22px;
+		flex: none;
+		transition: transform 0.25s;
+	}
+
+	.faq-item.is-open .faq-icon {
+		transform: rotate(45deg);
+	}
+
+	.faq-panel {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	.faq-item.is-open .faq-panel {
+		grid-template-rows: 1fr;
+	}
+
+	.faq-panel-inner {
+		overflow: hidden;
+	}
+
+	.faq-panel-inner p {
+		font: 400 15.5px / 1.65 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 0;
+		padding: 0 24px 24px;
+		opacity: 0;
+		transform: translateY(-6px);
+		transition:
+			opacity 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	.faq-item.is-open .faq-panel-inner p {
+		opacity: 1;
+		transform: translateY(0);
+		transition-delay: 0.1s;
+	}
+
+	@media (max-width: 620px) {
+		.faq {
+			padding: 48px 18px;
+		}
+	}
+</style>
+
+<script>
+	const items = document.querySelectorAll<HTMLDivElement>('.faq-item');
+
+	items.forEach((item) => {
+		const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
+
+		trigger?.addEventListener('click', () => {
+			const wasOpen = item.classList.contains('is-open');
+
+			items.forEach((other) => {
+				other.classList.remove('is-open');
+				other.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+			});
+
+			if (!wasOpen) {
+				item.classList.add('is-open');
+				trigger.setAttribute('aria-expanded', 'true');
+			}
+		});
+	});
+</script>

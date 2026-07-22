@@ -2,296 +2,117 @@
 const links = [
 	{ href: '#servicios', label: 'Servicios' },
 	{ href: '#proceso', label: 'Proceso' },
-	{ href: '#portafolio', label: 'Portafolio' },
-	{ href: '#nosotros', label: 'Nosotros' },
-	{ href: '#contacto', label: 'Contacto' },
+	{ href: '#resultados', label: 'Resultados' },
+	{ href: '#equipo', label: 'Equipo' },
 ];
 ---
 
-<header class="navbar">
-	<div class="brand">
-		<div class="brand-bars" aria-hidden="true">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
+<nav class="navbar">
+	<a href="#top" class="brand">
+		<span class="brand-badge" aria-hidden="true">S</span>
 		<span class="brand-name">Skeilo</span>
-	</div>
-
-	<nav class="nav-links" id="nav-links" aria-label="Navegación principal">
-		{links.map((link) => <a href={link.href}>{link.label}</a>)}
-		<a
-			href="https://wa.me/573217866817"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="cta-button cta-button--mobile"
-		>
-			Hablemos por WhatsApp
-		</a>
-	</nav>
+	</a>
 
 	<div class="nav-actions">
-		<a
-			href="https://wa.me/573217866817"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="cta-button cta-button--desktop"
-		>
-			Hablemos por WhatsApp
+		<div class="nav-links">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		</div>
+		<a href="https://wa.me/573217866817" target="_blank" rel="noopener noreferrer" class="cta-button">
+			Hablemos →
 		</a>
-		<button
-			type="button"
-			id="nav-toggle"
-			class="nav-toggle"
-			aria-expanded="false"
-			aria-controls="nav-links"
-			aria-label="Abrir menú de navegación"
-		>
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
 	</div>
-</header>
+</nav>
 
 <style>
 	.navbar {
 		position: sticky;
 		top: 0;
-		z-index: 50;
+		z-index: 150;
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: 16px;
-		padding: clamp(14px, 2.5vw, 20px) clamp(20px, 6vw, 56px);
-		background: var(--color-navy);
-		box-shadow: 0 2px 20px rgba(11, 30, 63, 0.15);
-		overflow: visible;
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 16px 24px;
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		background: rgba(7, 23, 48, 0.62);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 	}
 
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 10px;
+		color: var(--color-white);
 	}
 
-	.brand-bars {
-		display: flex;
-		align-items: flex-end;
-		gap: 3px;
-		height: 20px;
+	.brand:hover {
+		color: var(--color-white);
 	}
 
-	.brand-bars span {
-		width: 5px;
-		border-radius: 2px 2px 0 0;
-	}
-
-	.brand-bars span:nth-child(1) {
-		height: 7px;
-		background: var(--color-mint);
-	}
-	.brand-bars span:nth-child(2) {
-		height: 12px;
-		background: var(--color-teal);
-	}
-	.brand-bars span:nth-child(3) {
-		height: 17px;
-		background: var(--color-sky);
-	}
-	.brand-bars span:nth-child(4) {
-		height: 20px;
-		background: var(--color-blue);
+	.brand-badge {
+		width: 26px;
+		height: 26px;
+		border-radius: 7px;
+		background: linear-gradient(135deg, var(--color-mint), var(--color-blue));
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font: 700 15px var(--font-display);
+		color: var(--color-navy);
 	}
 
 	.brand-name {
 		font: 600 19px var(--font-display);
-		color: var(--color-white);
 		letter-spacing: -0.01em;
+	}
+
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		font-size: 14.5px;
 	}
 
 	.nav-links {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
-		gap: clamp(16px, 3vw, 28px);
-		font: 400 14px var(--font-sans);
-		color: rgba(255, 255, 255, 0.78);
-		z-index: 40;
+		gap: 28px;
 	}
 
 	.nav-links a {
-		position: relative;
-		color: rgba(255, 255, 255, 0.78);
+		color: var(--color-ink-muted);
 		transition: color 0.2s;
-	}
-
-	.nav-links a::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		bottom: -4px;
-		width: 0;
-		height: 2px;
-		background: var(--color-mint);
-		transition: width 0.25s ease;
 	}
 
 	.nav-links a:hover {
 		color: var(--color-white);
 	}
 
-	.nav-links a:hover::after {
-		width: 100%;
-	}
-
-	.nav-actions {
-		display: flex;
-		align-items: center;
-		gap: 14px;
-	}
-
 	.cta-button {
-		font: 600 13px var(--font-sans);
-		color: var(--color-navy);
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
 		background: var(--color-mint);
-		padding: 11px 22px;
-		border-radius: 999px;
-		transition:
-			transform 0.2s,
-			opacity 0.2s;
-		display: inline-block;
+		color: var(--color-navy);
+		font: 600 14px var(--font-sans);
+		padding: 10px 18px;
+		border-radius: 9px;
+		box-shadow: 0 6px 22px rgba(0, 224, 184, 0.22);
 		white-space: nowrap;
+		transition: transform 0.2s;
 	}
 
 	.cta-button:hover {
-		opacity: 0.88;
-		transform: translateY(-2px);
 		color: var(--color-navy);
+		transform: translateY(-1px);
 	}
 
-	.cta-button--mobile {
-		display: none;
-	}
-
-	.nav-toggle {
-		display: none;
-		flex-direction: column;
-		justify-content: center;
-		gap: 5px;
-		width: 32px;
-		height: 32px;
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: 0;
-	}
-
-	.nav-toggle span {
-		display: block;
-		width: 100%;
-		height: 2px;
-		background: var(--color-white);
-		border-radius: 2px;
-		transition:
-			transform 0.25s ease,
-			opacity 0.25s ease;
-	}
-
-	.nav-toggle[aria-expanded='true'] span:nth-child(1) {
-		transform: translateY(7px) rotate(45deg);
-	}
-	.nav-toggle[aria-expanded='true'] span:nth-child(2) {
-		opacity: 0;
-	}
-	.nav-toggle[aria-expanded='true'] span:nth-child(3) {
-		transform: translateY(-7px) rotate(-45deg);
-	}
-
-	@media (max-width: 860px) {
+	@media (max-width: 980px) {
 		.nav-links {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			flex-direction: column;
-			align-items: center;
-			text-align: center;
-			background: var(--color-navy);
-			padding: 20px 24px;
-			gap: 18px !important;
-			opacity: 0;
-			visibility: hidden;
-			transform: translateY(-8px);
-			pointer-events: none;
-			box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-			transition:
-				opacity 0.28s ease,
-				transform 0.28s ease,
-				visibility 0s linear 0.28s;
-		}
-
-		.nav-links.open {
-			opacity: 1;
-			visibility: visible;
-			transform: translateY(0);
-			pointer-events: auto;
-			transition:
-				opacity 0.28s ease,
-				transform 0.28s ease,
-				visibility 0s linear 0s;
-		}
-
-		.nav-toggle {
-			display: flex !important;
-		}
-
-		.cta-button--desktop {
 			display: none;
-		}
-
-		.cta-button--mobile {
-			display: inline-block;
-			margin-top: 4px;
 		}
 	}
 </style>
-
-<script>
-	const toggle = document.getElementById('nav-toggle');
-	const navLinks = document.getElementById('nav-links');
-
-	if (toggle && navLinks) {
-		const closeMenu = () => {
-			navLinks.classList.remove('open');
-			toggle.setAttribute('aria-expanded', 'false');
-		};
-
-		toggle.addEventListener('click', () => {
-			const isOpen = navLinks.classList.toggle('open');
-			toggle.setAttribute('aria-expanded', String(isOpen));
-		});
-
-		navLinks.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', (event) => {
-				const href = link.getAttribute('href') || '';
-
-				if (href.startsWith('#')) {
-					const targetEl = document.getElementById(href.slice(1));
-
-					if (targetEl) {
-						event.preventDefault();
-						closeMenu();
-						targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-						history.pushState(null, '', href);
-						return;
-					}
-				}
-
-				closeMenu();
-			});
-		});
-	}
-</script>
