@@ -1,24 +1,21 @@
 :root {
 	--color-navy: #0b1e3f;
-	--color-navy-hover: #152a52;
+	--color-navy-alt: #0f274a;
+	--color-card: #123566;
 	--color-mint: #00e0b8;
+	--color-mint-light: #5fedd1;
 	--color-teal: #22cfc6;
 	--color-sky: #3db9da;
 	--color-blue: #2563eb;
-	--color-text: #1c2533;
-	--color-bg-light: #f4f6fa;
 	--color-white: #fff;
-	--color-result: #00a88a;
-	--color-error-bg: #fdecec;
-	--color-error-border: #f3b6b6;
-	--color-error-text: #8a1f1f;
-	--color-success-bg: #e6fbf5;
-	--color-success-border: #8ce0cb;
-	--color-success-text: #0b6b54;
+	--color-ink: #e8eef7;
+	--color-ink-soft: #c9d6e8;
+	--color-ink-muted: #9fb0c8;
+	--color-ink-dim: #6b7f9c;
 
 	--font-sans: var(--font-ibm-plex-sans);
 	--font-mono: var(--font-ibm-plex-mono);
-	--font-display: var(--font-sora);
+	--font-display: var(--font-space-grotesk);
 }
 
 *,
@@ -34,10 +31,15 @@ html {
 
 body {
 	margin: 0;
-	background: var(--color-white);
-	color: var(--color-text);
+	background: var(--color-navy);
+	color: var(--color-ink);
 	font-family: var(--font-sans);
 	overflow-x: hidden;
+}
+
+::selection {
+	background: rgba(0, 224, 184, 0.28);
+	color: var(--color-white);
 }
 
 /* Offsets anchor-link scrolling so section content doesn't land underneath
@@ -46,19 +48,13 @@ section[id] {
 	scroll-margin-top: 96px;
 }
 
-/* Google requires visible reCAPTCHA attribution text in the UI whenever
-   the floating badge is hidden (see .recaptcha-disclaimer in Contact.astro). */
-.grecaptcha-badge {
-	visibility: hidden;
-}
-
 a {
-	color: var(--color-blue);
+	color: var(--color-mint);
 	text-decoration: none;
 }
 
 a:hover {
-	color: var(--color-navy);
+	color: var(--color-mint-light);
 }
 
 img,
@@ -72,57 +68,18 @@ button {
 }
 
 /* Reveal-on-scroll: base hidden state, .is-revealed animates in.
-   Matches the original design's fadeInUp-style scroll reveal. */
+   Per-grid stagger delays live in each component via :nth-child. */
 [data-reveal] {
 	opacity: 0;
 	transform: translateY(24px);
 	transition:
-		opacity 0.6s ease,
-		transform 0.6s ease;
+		opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 [data-reveal].is-revealed {
 	opacity: 1;
 	transform: translateY(0);
-}
-
-[data-reveal='svc2'],
-[data-reveal='proc2'],
-[data-reveal='port2'],
-[data-reveal='team2'] {
-	transition-delay: 0.06s;
-}
-
-[data-reveal='svc3'],
-[data-reveal='proc3'],
-[data-reveal='port3'],
-[data-reveal='team3'] {
-	transition-delay: 0.12s;
-}
-
-[data-reveal='svc4'],
-[data-reveal='proc4'] {
-	transition-delay: 0.18s;
-}
-
-[data-reveal='val2'] {
-	transition-delay: 0.04s;
-}
-[data-reveal='val3'] {
-	transition-delay: 0.08s;
-}
-[data-reveal='val4'] {
-	transition-delay: 0.12s;
-}
-[data-reveal='val5'] {
-	transition-delay: 0.16s;
-}
-[data-reveal='val6'] {
-	transition-delay: 0.2s;
-}
-
-[data-reveal='contactForm'] {
-	transition-delay: 0.1s;
 }
 
 @keyframes fadeInUp {
@@ -136,24 +93,15 @@ button {
 	}
 }
 
-@keyframes floatY {
-	from {
-		transform: translateY(-8px);
-	}
-	to {
-		transform: translateY(8px);
+@keyframes ambientFloat1 {
+	50% {
+		transform: translate(34px, -30px);
 	}
 }
 
-@keyframes drift {
-	0% {
-		transform: translate(0, 0) scale(1);
-	}
+@keyframes ambientFloat2 {
 	50% {
-		transform: translate(-4%, 3%) scale(1.06);
-	}
-	100% {
-		transform: translate(0, 0) scale(1);
+		transform: translate(-40px, 26px);
 	}
 }
 
@@ -169,8 +117,9 @@ button {
 	}
 
 	.hero-fade,
-	.hero-blob,
-	.hero-diagram {
+	.ambient-glow,
+	#sk-progress {
 		animation: none !important;
+		transition: none !important;
 	}
 }

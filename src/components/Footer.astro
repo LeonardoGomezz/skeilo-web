@@ -1,74 +1,91 @@
 ---
 const year = new Date().getFullYear();
+
+const links = [
+	{ href: '#servicios', label: 'Servicios' },
+	{ href: '#proceso', label: 'Proceso' },
+	{ href: '#portafolio', label: 'Casos' },
+	{ href: '#contacto', label: 'Contacto' },
+];
 ---
 
 <footer class="site-footer">
-	<div class="brand">
-		<div class="brand-bars" aria-hidden="true">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
+	<div class="footer-inner">
+		<a href="#top" class="brand">
+			<img src="/favico.png" alt="" width="26" height="26" class="brand-badge" />
+			<span class="brand-name">Skeilo</span>
+		</a>
+
+		<div class="footer-links">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
 		</div>
-		<span class="brand-name">Skeilo</span>
+
+		<span class="copyright">© {year} Skeilo · Software que escala.</span>
 	</div>
-	<span class="copyright">© {year} Skeilo. Software que escala.</span>
 </footer>
 
 <style>
 	.site-footer {
-		padding: 36px clamp(20px, 6vw, 56px);
-		background: var(--color-navy);
-		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+		padding: 44px 24px;
+	}
+
+	.footer-inner {
+		max-width: 1280px;
+		margin: 0 auto;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 16px;
 		align-items: center;
 		justify-content: space-between;
+		gap: 20px;
 	}
 
 	.brand {
 		display: flex;
 		align-items: center;
 		gap: 10px;
+		color: var(--color-white);
 	}
 
-	.brand-bars {
-		display: flex;
-		align-items: flex-end;
-		gap: 2px;
-		height: 15px;
+	.brand:hover {
+		color: var(--color-white);
 	}
 
-	.brand-bars span {
-		width: 4px;
-		border-radius: 1px;
-	}
-
-	.brand-bars span:nth-child(1) {
-		height: 5px;
-		background: var(--color-mint);
-	}
-	.brand-bars span:nth-child(2) {
-		height: 9px;
-		background: var(--color-teal);
-	}
-	.brand-bars span:nth-child(3) {
-		height: 13px;
-		background: var(--color-sky);
-	}
-	.brand-bars span:nth-child(4) {
-		height: 15px;
-		background: var(--color-blue);
+	.brand-badge {
+		width: 26px;
+		height: 26px;
+		border-radius: 7px;
+		display: block;
 	}
 
 	.brand-name {
-		font: 600 14px var(--font-display);
-		color: rgba(255, 255, 255, 0.85);
+		font: 600 18px var(--font-display);
+	}
+
+	.footer-links {
+		display: flex;
+		gap: 24px;
+		font-size: 14px;
+		color: var(--color-ink-muted);
+	}
+
+	.footer-links a {
+		color: var(--color-ink-muted);
+	}
+
+	.footer-links a:hover {
+		color: var(--color-white);
 	}
 
 	.copyright {
-		font: 400 13px var(--font-sans);
-		color: rgba(255, 255, 255, 0.45);
+		font: 400 12.5px var(--font-mono);
+		color: var(--color-ink-dim);
+	}
+
+	@media (max-width: 620px) {
+		.footer-inner {
+			justify-content: center;
+			text-align: center;
+		}
 	}
 </style>

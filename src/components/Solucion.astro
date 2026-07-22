@@ -1,0 +1,209 @@
+---
+const bullets = [
+	{
+		lead: 'Del caos al control:',
+		text: 'una fuente única de verdad en lugar de 10 herramientas dispersas.',
+	},
+	{
+		lead: 'Del gasto a la inversión:',
+		text: 'menos horas manuales, menos errores, menos costos que se acumulan.',
+	},
+	{
+		lead: 'Del hoy al mañana:',
+		text: 'infraestructura que soporta 100 o 100.000 clientes sin reescribir todo.',
+	},
+];
+---
+
+<section id="solucion" class="solucion">
+	<div class="solucion-grid">
+		<div data-reveal>
+			<span class="eyebrow eyebrow--mint">02 — La solución</span>
+			<h2>Software hecho para tu operación, no para el promedio.</h2>
+			<p>
+				Analizamos cómo trabaja tu empresa hoy y construimos exactamente lo que necesita: sistemas
+				a medida, automatización real y una arquitectura cloud que crece contigo. Tú te enfocas en
+				tu negocio; nosotros en que la tecnología no sea el cuello de botella.
+			</p>
+			<div class="bullets">
+				{
+					bullets.map((bullet) => (
+						<div class="bullet">
+							<span class="bullet-arrow" aria-hidden="true">
+								→
+							</span>
+							<span>
+								<b>{bullet.lead}</b> {bullet.text}
+							</span>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div data-reveal class="stats-wrap">
+			<div class="stats-grid">
+				<div class="stat stat--feature">
+					<span class="stat-icon" aria-hidden="true">⚡</span>
+					<div>
+						<div class="stat-value">3×</div>
+						<div class="stat-label">más velocidad de entrega vs. desarrollo tradicional</div>
+					</div>
+				</div>
+				<div class="stat">
+					<div class="stat-value stat-value--sm">−41%</div>
+					<div class="stat-label stat-label--sm">costos operativos</div>
+				</div>
+				<div class="stat">
+					<div class="stat-value stat-value--sm">2 sem</div>
+					<div class="stat-label stat-label--sm">a la primera entrega útil</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.solucion {
+		padding: 96px 24px;
+		background: linear-gradient(180deg, transparent, rgba(0, 224, 184, 0.04), transparent);
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+
+	.solucion-grid {
+		max-width: 1280px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 0.9fr 1.1fr;
+		gap: 56px;
+		align-items: center;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.eyebrow--mint {
+		color: var(--color-mint);
+	}
+
+	.solucion-grid h2 {
+		font: 600 clamp(30px, 4.5vw, 50px) / 1.04 var(--font-display);
+		letter-spacing: -0.025em;
+		margin: 16px 0 0;
+	}
+
+	.solucion-grid > div > p {
+		font: 400 18px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 18px 0 0;
+	}
+
+	.bullets {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		margin: 28px 0 0;
+	}
+
+	.bullet {
+		display: flex;
+		gap: 12px;
+		align-items: flex-start;
+	}
+
+	.bullet-arrow {
+		color: var(--color-mint);
+		font-size: 18px;
+		margin-top: 1px;
+	}
+
+	.bullet span:last-child {
+		color: var(--color-ink-soft);
+		font-size: 16px;
+	}
+
+	.bullet b {
+		color: var(--color-white);
+	}
+
+	.stats-wrap {
+		position: relative;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+	}
+
+	.stat {
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 16px;
+		padding: 22px;
+	}
+
+	.stat--feature {
+		background: linear-gradient(160deg, var(--color-card), var(--color-navy));
+		border-color: rgba(120, 200, 255, 0.16);
+		border-radius: 16px;
+		padding: 24px;
+		grid-row: span 2;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 230px;
+	}
+
+	.stat-icon {
+		font-size: 28px;
+	}
+
+	.stat-value {
+		font: 700 38px var(--font-display);
+		color: var(--color-mint);
+	}
+
+	.stat-value--sm {
+		font-size: 30px;
+		color: var(--color-white);
+	}
+
+	.stat-label {
+		color: var(--color-ink-muted);
+		font-size: 14px;
+		margin-top: 4px;
+	}
+
+	.stat-label--sm {
+		font-size: 13.5px;
+	}
+
+	@media (max-width: 980px) {
+		.solucion {
+			padding-top: 64px;
+			padding-bottom: 64px;
+		}
+
+		.solucion-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.solucion {
+			padding: 48px 18px;
+		}
+
+		.stats-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.stat--feature {
+			grid-row: auto;
+		}
+	}
+</style>

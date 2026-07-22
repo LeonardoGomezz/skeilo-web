@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets';
+import deimerPhoto from '../assets/team/deimer.webp';
+import leonardoPhoto from '../assets/team/leonardo.webp';
+
+const team = [
+	{
+		name: 'Deimer Restrepo',
+		role: 'CO-FOUNDER · ING. DE SISTEMAS',
+		image: deimerPhoto,
+	},
+	{
+		name: 'Leonardo',
+		role: 'CO-FOUNDER · ING. DE SISTEMAS',
+		image: leonardoPhoto,
+	},
+];
+---
+
+<section id="equipo" class="equipo">
+	<div class="section-inner">
+		<div data-reveal class="section-head">
+			<span class="eyebrow">09 — Equipo</span>
+			<h2>Hablas directo con quien construye.</h2>
+			<p>
+				Sin capas de intermediarios. Dos ingenieros de sistemas responsables de tu proyecto de
+				principio a fin.
+			</p>
+		</div>
+
+		<div class="equipo-grid">
+			{
+				team.map((member) => (
+					<div data-reveal class="team-card">
+						<Image
+							src={member.image}
+							alt={`${member.name}, Co-founder de Skeilo`}
+							width={88}
+							height={88}
+							densities={[1, 2]}
+							format="webp"
+							loading="lazy"
+						/>
+						<div>
+							<h3>{member.name}</h3>
+							<div class="team-role">{member.role}</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.equipo {
+		padding: 96px 24px;
+		background: rgba(255, 255, 255, 0.015);
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.section-inner {
+		max-width: 1080px;
+		margin: 0 auto;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-mint);
+	}
+
+	.section-head {
+		text-align: center;
+		max-width: 640px;
+		margin: 0 auto;
+	}
+
+	.section-head h2 {
+		font: 600 clamp(30px, 4.5vw, 50px) / 1.04 var(--font-display);
+		letter-spacing: -0.025em;
+		margin: 16px 0 0;
+	}
+
+	.section-head p {
+		font: 400 17px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 16px 0 0;
+	}
+
+	.equipo-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 22px;
+		margin: 44px auto 0;
+		max-width: 760px;
+	}
+
+	.equipo-grid > :nth-child(2) {
+		transition-delay: 0.06s;
+	}
+
+	.team-card {
+		background: linear-gradient(160deg, var(--color-card), var(--color-navy));
+		border: 1px solid rgba(120, 200, 255, 0.14);
+		border-radius: 18px;
+		padding: 26px;
+		display: flex;
+		align-items: center;
+		gap: 18px;
+	}
+
+	.team-card img {
+		width: 88px;
+		height: 88px;
+		border-radius: 14px;
+		object-fit: cover;
+		border: 1px solid rgba(0, 224, 184, 0.3);
+		flex: none;
+	}
+
+	.team-card h3 {
+		font: 600 22px var(--font-display);
+		letter-spacing: -0.01em;
+		margin: 0;
+	}
+
+	.team-role {
+		font: 400 12px var(--font-mono);
+		letter-spacing: 0.06em;
+		color: var(--color-mint);
+		margin-top: 6px;
+	}
+
+	@media (max-width: 980px) {
+		.equipo {
+			padding-top: 64px;
+			padding-bottom: 64px;
+		}
+
+		.equipo-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.equipo {
+			padding: 48px 18px;
+		}
+	}
+</style>

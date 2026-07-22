@@ -1,0 +1,144 @@
+---
+const problems = [
+	{
+		icon: '🔁',
+		title: 'Procesos manuales que agotan al equipo',
+		desc: 'Hojas de cálculo, tareas repetitivas y errores humanos que no escalan y consumen las horas que deberían ir a crecer.',
+	},
+	{
+		icon: '🧩',
+		title: 'Herramientas que no se hablan entre sí',
+		desc: 'Datos dispersos en 10 plataformas y ninguna fuente única de verdad para tomar decisiones con confianza.',
+	},
+	{
+		icon: '📉',
+		title: 'Sistemas que se rompen al crecer',
+		desc: 'Lo que funcionaba con 100 clientes colapsa con 10.000. Cada cliente nuevo te cuesta más, no menos.',
+	},
+];
+---
+
+<section id="problema" class="problema">
+	<div class="section-inner">
+		<div data-reveal class="section-head">
+			<span class="eyebrow eyebrow--blue">01 — El problema</span>
+			<h2>El software genérico te está frenando — y cuesta más de lo que crees.</h2>
+			<p>
+				Cada hora que tu equipo dedica a tareas repetitivas, cada dato atrapado en una hoja de
+				cálculo y cada sistema que se rompe al crecer es dinero que se va. Esto es lo que vemos
+				una y otra vez:
+			</p>
+		</div>
+
+		<div class="problema-grid">
+			{
+				problems.map((problem) => (
+					<div data-reveal class="problema-card">
+						<div class="problema-icon" aria-hidden="true">
+							{problem.icon}
+						</div>
+						<h3>{problem.title}</h3>
+						<p>{problem.desc}</p>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.problema {
+		padding: 96px 24px;
+		background: var(--color-navy-alt);
+		border-top: 1px solid rgba(255, 255, 255, 0.07);
+	}
+
+	.section-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+	}
+
+	.eyebrow {
+		font: 500 12px var(--font-mono);
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.eyebrow--blue {
+		color: var(--color-blue);
+	}
+
+	.section-head {
+		max-width: 720px;
+	}
+
+	.section-head h2 {
+		font: 600 clamp(30px, 4.5vw, 50px) / 1.04 var(--font-display);
+		letter-spacing: -0.025em;
+		margin: 16px 0 0;
+	}
+
+	.section-head p {
+		font: 400 18px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 18px 0 0;
+	}
+
+	.problema-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+		margin: 44px 0 0;
+	}
+
+	.problema-grid > :nth-child(2) {
+		transition-delay: 0.06s;
+	}
+	.problema-grid > :nth-child(3) {
+		transition-delay: 0.12s;
+	}
+
+	.problema-card {
+		background: linear-gradient(180deg, rgba(255, 90, 90, 0.06), rgba(255, 255, 255, 0.01));
+		border: 1px solid rgba(255, 120, 120, 0.14);
+		border-radius: 16px;
+		padding: 26px;
+	}
+
+	.problema-icon {
+		font-size: 26px;
+	}
+
+	.problema-card h3 {
+		font: 600 20px var(--font-display);
+		letter-spacing: -0.01em;
+		margin: 14px 0 0;
+	}
+
+	.problema-card p {
+		font: 400 15px / 1.6 var(--font-sans);
+		color: var(--color-ink-muted);
+		margin: 10px 0 0;
+	}
+
+	@media (max-width: 980px) {
+		.problema {
+			padding-top: 64px;
+			padding-bottom: 64px;
+		}
+
+		.problema-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 620px) {
+		.problema {
+			padding: 48px 18px;
+		}
+
+		.problema-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
