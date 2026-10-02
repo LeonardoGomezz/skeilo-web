@@ -11,6 +11,7 @@ const cases = [
 		metric: '100% autogestionable',
 		image: kivaImage,
 		alt: 'Captura de la interfaz de KIVA, tienda online de ropa oversize',
+		url: 'https://www.kivactg.com/',
 	},
 	{
 		sector: 'SaaS B2B',
@@ -19,6 +20,7 @@ const cases = [
 		metric: 'Operación centralizada en un solo panel',
 		image: skeiloPosImage,
 		alt: 'Captura de la interfaz de skeiloPos, plataforma de gestión comercial',
+		url: 'https://www.skeilopos.com/',
 	},
 ];
 ---
@@ -39,7 +41,13 @@ const cases = [
 		<div class="cases-grid">
 			{
 				cases.map((item) => (
-					<div data-reveal class="case-card">
+					<a
+						data-reveal
+						class="case-card"
+						href={item.url}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<div class="case-image">
 							<Image
 								src={item.image}
@@ -53,11 +61,18 @@ const cases = [
 						</div>
 						<div class="case-body">
 							<span class="case-sector">{item.sector}</span>
-							<h3>{item.name}</h3>
+							{/* El espacio duro ata la flecha a la última palabra del título para
+								que no quede sola en una línea nueva cuando el nombre envuelve. */}
+							<h3>
+								{item.name}
+								{'\u00A0'}
+								<span class="case-arrow" aria-hidden="true">↗</span>
+							</h3>
 							<p>{item.desc}</p>
 							<div class="case-metric">{item.metric}</div>
+							<span class="sr-only">(abre en una nueva pestaña)</span>
 						</div>
-					</div>
+					</a>
 				))
 			}
 		</div>
@@ -118,6 +133,7 @@ const cases = [
 	}
 
 	.case-card {
+		display: block;
 		background: rgba(255, 255, 255, 0.025);
 		border: 1px solid rgba(255, 255, 255, 0.08);
 		border-radius: 18px;
@@ -125,8 +141,22 @@ const cases = [
 		transition: border-color 0.2s;
 	}
 
+	/* La tarjeta es un <a>: se neutraliza el color de enlace global para que
+	   el <h3> siga heredando --color-ink en lugar de teñirse de menta. */
+	.case-card,
 	.case-card:hover {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.case-card:hover,
+	.case-card:focus-visible {
 		border-color: rgba(0, 224, 184, 0.35);
+	}
+
+	.case-card:focus-visible {
+		outline: 2px solid var(--color-mint);
+		outline-offset: 3px;
 	}
 
 	.case-image {
@@ -160,6 +190,27 @@ const cases = [
 		margin: 10px 0 0;
 	}
 
+	/* Inline (no inline-block) para que el espacio duro impida el corte de
+	   línea; el desplazamiento usa position/left/top, que sí aplican a un
+	   inline, en lugar de transform. */
+	.case-arrow {
+		position: relative;
+		margin-left: 2px;
+		font-size: 0.85em;
+		color: var(--color-ink-dim);
+		transition:
+			color 0.2s,
+			left 0.2s,
+			top 0.2s;
+	}
+
+	.case-card:hover .case-arrow,
+	.case-card:focus-visible .case-arrow {
+		color: var(--color-mint);
+		left: 2px;
+		top: -2px;
+	}
+
 	.case-body p {
 		font: 400 14.5px / 1.55 var(--font-sans);
 		color: var(--color-ink-muted);
@@ -185,6 +236,14 @@ const cases = [
 
 		.cases-grid {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.case-arrow {
+			transition: none;
+			left: 0 !important;
+			top: 0 !important;
 		}
 	}
 </style>
